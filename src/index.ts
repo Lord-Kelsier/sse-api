@@ -1,6 +1,10 @@
 import express from 'express'
+import cors from 'cors'
+
 const app = express()
+
 app.use(express.json())
+app.use(cors())
 
 const PORT = 3000
 
@@ -24,8 +28,9 @@ app.get('/streaming', (_req, res) => {
       res.end() // terminates SSE session
       return
     }
+    console.log(counter)
     res.write(`data: ${JSON.stringify({ num: counter })}\n\n`) // res.write() instead of res.send()
-  }, 1000)
+  }, 200)
 
   // If client closes connection, stop sending events
   res.on('close', () => {
